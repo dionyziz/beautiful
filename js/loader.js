@@ -16,7 +16,7 @@ function onresize() {
     drawData( localData, currentMode );
     switch ( currentMode ) {
         case 'all':
-            $( 'h1' ).text( 'Phone market share - Smart phones VS Non-smart phones' );
+            $( 'h1' ).text( 'Phone market share - Non-smart phones VS Smart phones' );
             $( 'strong' ).show();
             break;
         case 'smart':
@@ -63,6 +63,9 @@ function drawData( json, which ) {
                 values.push( i + '%' );
             }
             var xlabels = collectXLabels( dataPoints );
+            for ( var key in dataPoints ) {
+                dataPoints[ key ].y = 1 - dataPoints[ key ].y;
+            }
 
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
