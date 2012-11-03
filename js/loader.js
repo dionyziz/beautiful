@@ -10,10 +10,20 @@ var PADDING_TOP = 10,
 currentMode = 'all';
 function onresize() {
     W = $( window ).width();
-    H = $( window ).height();
+    H = $( window ).height() - 100;
     canvas.width = W;
     canvas.height = H;
     drawData( localData, currentMode );
+    switch ( currentMode ) {
+        case 'all':
+            $( 'h1' ).text( 'Phone market share - Smart phones VS Non-smart phones' );
+            $( 'strong' ).show();
+            break;
+        case 'smart':
+            $( 'h1' ).text( 'Smart phone market breakdown' );
+            $( 'strong' ).hide();
+            break;
+    }
 }
 $( window ).resize( onresize );
 onresize();
@@ -48,8 +58,20 @@ function drawData( json, which ) {
             var light = lightColor( allColor );
             grad.addColorStop( 0, 'rgb(' + allColor.join( ',' ) + ')' );
             grad.addColorStop( 1, 'rgb(' + light.join( ',' ) + ')' );
+            var values = [];
+            for ( var i = 0; i <= 100; i += 10 ) {
+                values.push( i + '%' );
+            }
+            var xlabels = collectXLabels( dataPoints );
 
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
+            drawAxes( ctx, left, top, width, height, xlabels, values, {
+                size: 12,
+                color: 'transparent',
+                fillColor: 'black',
+                family: 'Trebuchet MS'
+            }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
+            break;
             break;
         case 'smart':
             var minx = Infinity, miny = Infinity;
