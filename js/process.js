@@ -2,7 +2,7 @@ function process( obj, shareType ) {
     var dataPoints = [];
     for ( var key in obj ) {
         var x = parseDate( key );
-        var y = 1 - obj[ key ][ shareType ];
+        var y = obj[ key ][ shareType ];
         var xLabel = key;
         var yLabel = Math.round( 100 * obj[ key ][ shareType ] ) + '%';
         var dataPoint = {

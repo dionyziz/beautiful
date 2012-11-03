@@ -1,5 +1,5 @@
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
-    var colors = [ 'green', 'red', 'black', 'blue' ];
+    var colors = [ 'green', 'red', 'black', 'blue', 'yellow', 'pink', 'orange' ];
     var heightSum;
     dataPointsSets.reverse();
     for ( var i = 0; i < dataPointsSets.length; ++i ) {
@@ -8,7 +8,7 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
         for ( var j = i + 1; j < dataPointsSets.length; ++j ) {
             var lowerDataPoints = dataPointsSets[ j ];
             for ( var key in lowerDataPoints ) {
-                dataPoints[ key ] += lowerDataPoints[ key ];
+                dataPoints[ key ].y += lowerDataPoints[ key ].y;
             }
 
         }
@@ -18,8 +18,6 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
 }
 
 function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color ) {
-    console.log( dataPoints.length );
-
     var g = new Graph( minx, maxx, miny, maxy, left, top, width, height );
 
     ctx.beginPath();

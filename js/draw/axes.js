@@ -15,8 +15,8 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
     labelsy.unshift( '' );
     labelsy.reverse();
 
-    j = 0;
-    for ( i = 0; i <= width; i += rowW ) {
+    var j = 0;
+    for ( var i = 0; i <= width; i += rowW ) {
 
         if ( i != 0 ) {
             ctx.beginPath();
@@ -29,7 +29,7 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
         ctx.beginPath();
         textSize = ctx.measureText( labelsx[ j ] );
         ctx.strokeStyle = font.color;
-        ctx.strokeText( labelsx[ j ], i + left - textSize.width/2, height + top + 20 );
+        ctx.strokeText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
         ctx.stroke();
 
         ++j;
@@ -37,11 +37,11 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
     textSize = ctx.measureText( labelsx[ j ] );
     ctx.beginPath();
     ctx.strokeStyle = font.color;
-    ctx.strokeText( labelsx[ j ], i + left - textSize.width/2, height + top + 20 );
+    ctx.strokeText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
     ctx.stroke();
 
     j = 0;
-    for ( i = 0; i < height; i += lineH ) {
+    for ( var i = 0; i < height; i += lineH ) {
         if ( i != 0 ) {
             ctx.beginPath();
             ctx.strokeStyle = gridColor;
