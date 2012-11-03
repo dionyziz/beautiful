@@ -7,6 +7,55 @@ function drawBackground( ctx, topx, topy, bottomx, bottomy, topColor, bottomColo
     ctx.fillStyle = grad;
     ctx.fillRect( left, top, width, height );
 }
+function drawLegend( ctx, colors ) {
+    var x = 5;
+    console.log( colors );
+
+    ctx.font = "10pt Arial";
+    ctx.strokeStyle = "#000";
+
+    ctx.beginPath();
+    ctx.fillStyle = "rgb( " + colors.Android[ 0 ] + ", " + colors.Android[ 1 ] + ", " + colors.Android[ 2 ] + " )";
+    ctx.fillRect( 5, 0 * 30 + 10, 20, 20 ); 
+    ctx.strokeRect( 5, 0 * 30 + 10, 20, 20 ); 
+    ctx.fillText( "Android", x + 30, 0 * 30 + 25 );
+
+    ctx.beginPath();
+    ctx.fillStyle = "rgb( " + colors.Bada[ 0 ] + ", " + colors.Bada[ 1 ] + ", " + colors.Android[ 2 ] + " )";
+    ctx.fillRect( 5, 1 * 30 + 10, 20, 20 ); 
+    ctx.strokeRect( 5, 1 * 30 + 10, 20, 20 ); 
+    ctx.fillText( "Bada", x + 30, 1 * 30 + 25 );
+
+    ctx.beginPath();
+    ctx.fillStyle = "rgb( " + colors.BlackBerry[ 0 ] + ", " + colors.BlackBerry[ 1 ] + ", " + colors.BlackBerry[ 2 ] + " )";
+    ctx.fillRect( 5, 2 * 30 + 10, 20, 20 ); 
+    ctx.strokeRect( 5, 2 * 30 + 10, 20, 20 ); 
+    ctx.fillText( "BlackBerry", x + 30, 2 * 30 + 25 );
+
+    ctx.beginPath();
+    ctx.fillStyle = "rgb( " + colors.Symbian[ 0 ] + ", " + colors.Symbian[ 1 ] + ", " + colors.Symbian[ 2 ] + " )";
+    ctx.fillRect( 5, 3 * 30 + 10, 20, 20 ); 
+    ctx.strokeRect( 5, 3 * 30 + 10, 20, 20 ); 
+    ctx.fillText( "Symbian", x + 30, 3 * 30 + 25 );
+
+    ctx.beginPath();
+    ctx.fillStyle = "rgb( " + colors[ "Windows Mobile/Phone" ][ 0 ] + ", " + colors[ "Windows Mobile/Phone" ][ 1 ] + ", " + colors[ "Windows Mobile/Phone" ][ 2 ] + " )";
+    ctx.fillRect( 5, 4 * 30 + 10, 20, 20 ); 
+    ctx.strokeRect( 5, 4 * 30 + 10, 20, 20 ); 
+    ctx.fillText( "Windows Mobile/Phone", x + 30, 4 * 30 + 25 );
+
+    ctx.beginPath();
+    ctx.fillStyle = "rgb( " + colors[ "iOS iPhone" ][ 0 ] + ", " + colors[ "iOS iPhone" ][ 1 ] + ", " + colors[ "iOS iPhone" ][ 2 ] + " )";
+    ctx.fillRect( 5, 5 * 30 + 10, 20, 20 ); 
+    ctx.strokeRect( 5, 5 * 30 + 10, 20, 20 ); 
+    ctx.fillText( "iOS iPhone", x + 30, 5 * 30 + 25 );
+
+    ctx.beginPath();
+    ctx.fillStyle = "#fff";
+    ctx.fillRect( 5, 6 * 30 + 10, 20, 20 ); 
+    ctx.strokeRect( 5, 6 * 30 + 10, 20, 20 ); 
+    ctx.fillText( "Other", x + 30, 6 * 30 + 25 );
+}
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
     dataPointsSets.reverse();
     for ( var i = 0; i < dataPointsSets.length; ++i ) {

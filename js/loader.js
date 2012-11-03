@@ -5,7 +5,7 @@ var W, H;
 var PADDING_TOP = 10,
     PADDING_RIGHT = 150,
     PADDING_BOTTOM = 50,
-    PADDING_LEFT = 100;
+    PADDING_LEFT = 200;
 
 currentMode = 'all';
 function onresize() {
@@ -16,12 +16,12 @@ function onresize() {
     drawData( localData, currentMode );
     switch ( currentMode ) {
         case 'all':
-            $( 'h1' ).text( 'Phone market share - Smart phones VS Non-smart phones' );
-            $( 'strong' ).show();
+            $( 'h1' ).text( 'Phone market share - Non-smart phones VS Smart phones' );
+            $( 'a' ).text( 'Click for market breakdown' );
             break;
         case 'smart':
             $( 'h1' ).text( 'Smart phone market breakdown' );
-            $( 'strong' ).hide();
+            $( 'a' ).text( 'Click for smartphones VS non-smart phones' );
             break;
     }
 }
@@ -42,6 +42,7 @@ function drawData( json, which ) {
         height = H - PADDING_TOP - PADDING_BOTTOM;
     json = JSON.parse( json );
     var dataPoints;
+    var colors = { 'Symbian': [ 231, 191, 109 ], 'iOS iPhone': [ 211, 211, 212 ], 'BlackBerry': [ 44, 44, 44 ], 'Android': [ 151, 192, 62 ], 'Windows Mobile/Phone': [ 0, 165, 227 ], 'Bada': [ 4, 78, 92 ] };
 
     switch ( which ) { 
         case 'all':
@@ -64,6 +65,9 @@ function drawData( json, which ) {
                 values.push( i + '%' );
             }
             var xlabels = collectXLabels( dataPoints );
+            for ( var key in dataPoints ) {
+                dataPoints[ key ].y = 1 - dataPoints[ key ].y;
+            }
 
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad, isPoint );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
@@ -77,7 +81,6 @@ function drawData( json, which ) {
             var minx = Infinity, miny = Infinity;
             var maxx = 0, maxy = 0;
             var dataPointsSets = [];
-            var colors = { 'Symbian': [ 231, 191, 109 ], 'iOS iPhone': [ 211, 211, 212 ], 'BlackBerry': [ 44, 44, 44 ], 'Android': [ 151, 192, 62 ], 'Windows Mobile/Phone': [ 0, 165, 227 ], 'Bada': [ 4, 78, 92 ] };
             for ( var key in json ) {
                 if ( key == 'Non-smart' ) {
                     continue;
@@ -86,6 +89,7 @@ function drawData( json, which ) {
                 dataPoints = json[ key ];
                 var processed = process( dataPoints, 'smartphoneShare' );
                 dataPointsSets.push( { color: colors[ key ], data: processed.dataPoints } );
+                drawLegend( ctx, colors );
                 minx = Math.min( processed.minx, minx );
                 maxx = Math.max( processed.maxx, maxx );
                 miny = Math.min( processed.miny, miny );
@@ -139,11 +143,15 @@ canvas.onmousemove = function( e ) {
     }
 };
 canvas.onmousedown = function() {
-    if ( onSmart ) {
-        console.log( 'Smartphones clicked!' );
-        currentMode = 'smart';
-
-        canvas.style.cursor = 'default';
-        onresize();
+    if ( currentMode == 'smart' ) {
+        currentMode = 'all';
     }
+    else {
+        currentMode = 'smart';
+    }
+    onresize();
 };
+$( 'a' ).click( function() {
+    canvas.onmousedown();
+    return false;
+} );
