@@ -76,6 +76,11 @@ function drawData( json, which ) {
                 color: 'transparent',
                 fillColor: 'black',
                 family: 'Trebuchet MS'
+            }, {
+                size: 12,
+                color: 'transparent',
+                fillColor: 'white',
+                family: 'Trebuchet MS'
             }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
             break;
         case 'smart':
@@ -107,6 +112,11 @@ function drawData( json, which ) {
                 size: 12,
                 color: 'transparent',
                 fillColor: 'black',
+                family: 'Trebuchet MS'
+            }, {
+                size: 12,
+                color: 'transparent',
+                fillColor: 'white',
                 family: 'Trebuchet MS'
             }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
             break;

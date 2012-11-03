@@ -1,11 +1,10 @@
-function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridColor, rectColor ) {
+function drawAxes( ctx, left, top, width, height, labelsx, labelsy, fontx, fonty, gridColor, rectColor ) {
     ctx.beginPath();
     ctx.rect( left, top, width, height );
     ctx.lineWidth = 1;
     ctx.strokeStyle = rectColor;
     ctx.stroke();
 
-    ctx.font = font.size + "pt " + font.family;
     var rowW = width / ( labelsx.length - 1 )
         lineH = height / ( labelsy.length - 1 ),
         textSize = 0,
@@ -27,8 +26,9 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
 
         ctx.beginPath();
         textSize = ctx.measureText( labelsx[ j ] );
-        ctx.strokeStyle = font.color;
-        ctx.fillStyle = font.fillColor;
+        ctx.font = fontx.size + "pt " + fontx.family;
+        ctx.strokeStyle = fontx.color;
+        ctx.fillStyle = fontx.fillColor;
         ctx.strokeText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
         ctx.fillText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
 
@@ -55,8 +55,9 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
 
         textSize = ctx.measureText( labelsy[ j ] );
         ctx.beginPath();
-        ctx.strokeStyle = font.color;
-        ctx.fillStyle = font.fillColor;
+        ctx.font = fonty.size + "pt " + fonty.family;
+        ctx.strokeStyle = fonty.color;
+        ctx.fillStyle = fonty.fillColor;
         ctx.strokeText( labelsy[ j ], left + width - textSize.width - 2, i + top + lineH - 3 );
         ctx.fillText( labelsy[ j ], left + width - textSize.width - 2, i + top + lineH - 3 );
 
