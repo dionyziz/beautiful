@@ -55,23 +55,15 @@ function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height
             y: dataPoint.y
         } );
     }
-    var f = lagrange( polynomial );
+    // var f = lagrange( polynomial );
 
-    for ( var i = 0; i < polynomial.length - 1; ++i ) {
+    for ( var i = 0; i < polynomial.length; ++i ) {
         var dataPoint = polynomial[ i ];
         var nextPoint = polynomial[ i + 1 ];
         var xp = g.transformX( dataPoint.x );
-        var yp = g.transformY( f( dataPoint.x ) );
+        var yp = g.transformY( dataPoint.y );
 
-        for ( var j = 0; j <= 0; j += 0.01 ) {
-            // tween
-            x = dataPoint.x + ( nextPoint.x - dataPoint.x ) * j;
-            y = f( x );
-            console.log( x, y );
-            xp = g.transformX( x );
-            yp = g.transformY( y );
-            ctx.lineTo( xp, yp );
-        }
+        ctx.lineTo( xp, yp );
     }
     ctx.lineTo( g.transformX( maxx ), g.transformY( miny ) );
     ctx.closePath();
