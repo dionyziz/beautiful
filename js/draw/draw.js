@@ -14,42 +14,15 @@ function drawLegend( ctx, colors, page ) {
     ctx.strokeStyle = "#000";
 
     if ( page == "smart" ) {
-        ctx.beginPath();
-        ctx.fillStyle = "rgb( " + colors.Android[ 0 ] + ", " + colors.Android[ 1 ] + ", " + colors.Android[ 2 ] + " )";
-        ctx.fillRect( 5, 0 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 0 * 30 + 10, 20, 20 ); 
-        ctx.fillText( "Android", x + 30, 0 * 30 + 25 );
+        var devices = [ "Android", "Bada", "BlackBerry", "Symbian", "Windows Mobile/Phone", "iOS iPhone" ];
 
-        ctx.beginPath();
-        ctx.fillStyle = "rgb( " + colors.Bada[ 0 ] + ", " + colors.Bada[ 1 ] + ", " + colors.Android[ 2 ] + " )";
-        ctx.fillRect( 5, 1 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 1 * 30 + 10, 20, 20 ); 
-        ctx.fillText( "Bada", x + 30, 1 * 30 + 25 );
-
-        ctx.beginPath();
-        ctx.fillStyle = "rgb( " + colors.BlackBerry[ 0 ] + ", " + colors.BlackBerry[ 1 ] + ", " + colors.BlackBerry[ 2 ] + " )";
-        ctx.fillRect( 5, 2 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 2 * 30 + 10, 20, 20 ); 
-        ctx.fillText( "BlackBerry", x + 30, 2 * 30 + 25 );
-
-        ctx.beginPath();
-        ctx.fillStyle = "rgb( " + colors.Symbian[ 0 ] + ", " + colors.Symbian[ 1 ] + ", " + colors.Symbian[ 2 ] + " )";
-        ctx.fillRect( 5, 3 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 3 * 30 + 10, 20, 20 ); 
-        ctx.fillText( "Symbian", x + 30, 3 * 30 + 25 );
-
-        ctx.beginPath();
-        ctx.fillStyle = "rgb( " + colors[ "Windows Mobile/Phone" ][ 0 ] + ", " + colors[ "Windows Mobile/Phone" ][ 1 ] + ", " + colors[ "Windows Mobile/Phone" ][ 2 ] + " )";
-        ctx.fillRect( 5, 4 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 4 * 30 + 10, 20, 20 ); 
-        ctx.fillText( "Windows Mobile/Phone", x + 30, 4 * 30 + 25 );
-
-        ctx.beginPath();
-        ctx.fillStyle = "rgb( " + colors[ "iOS iPhone" ][ 0 ] + ", " + colors[ "iOS iPhone" ][ 1 ] + ", " + colors[ "iOS iPhone" ][ 2 ] + " )";
-        ctx.fillRect( 5, 5 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 5 * 30 + 10, 20, 20 ); 
-        ctx.fillText( "iOS iPhone", x + 30, 5 * 30 + 25 );
-
+        for ( var i = 0; i < devices.length; ++i ) {
+            ctx.beginPath();
+            ctx.fillStyle = "rgb( " + colors[ devices[ i ] ][ 0 ] + ", " + colors[ devices[ i ] ][ 1 ] + ", " + colors[ devices[ i ] ][ 2 ] + " )";
+            ctx.fillRect( 5, i * 30 + 10, 20, 20 ); 
+            ctx.strokeRect( 5, i * 30 + 10, 20, 20 ); 
+            ctx.fillText( devices[ i ], x + 30, i * 30 + 25 );
+        }
         ctx.beginPath();
         ctx.fillStyle = "#fff";
         ctx.fillRect( 5, 6 * 30 + 10, 20, 20 ); 
@@ -58,19 +31,16 @@ function drawLegend( ctx, colors, page ) {
         ctx.fillText( "Other", x + 30, 6 * 30 + 25 );
     }
     else {
-        ctx.beginPath();
-        ctx.fillStyle = "#f48c2f";
-        ctx.fillRect( 5, 0 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 0 * 30 + 10, 20, 20 ); 
-        ctx.fillStyle = "#000";
-        ctx.fillText( "Non-smart phones", x + 30, 0 * 30 + 25 );
-
-        ctx.beginPath();
-        ctx.fillStyle = "#193585";
-        ctx.fillRect( 5, 1 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 1 * 30 + 10, 20, 20 ); 
-        ctx.fillStyle = "#000";
-        ctx.fillText( "Smartphones", x + 30, 1 * 30 + 25 );
+        var categories = [ 'Non-smart phones', 'Smartphones' ];
+        var colors = [ '#f48c2f', '#193585' ];
+        for ( var i = 0; i < categories.length; ++i ) {
+            ctx.beginPath();
+            ctx.fillStyle = colors[ i ];
+            ctx.fillRect( 5, i * 30 + 10, 20, 20 ); 
+            ctx.strokeRect( 5, i * 30 + 10, 20, 20 ); 
+            ctx.fillStyle = "#000";
+            ctx.fillText( categories[ i ], x + 30, i * 30 + 25 );
+        }
     }
 }
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height, animatepercentage ) {
