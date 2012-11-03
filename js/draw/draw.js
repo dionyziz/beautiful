@@ -85,7 +85,7 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
     }
 }
 
-function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color, callback ) {
+function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color ) {
     var g = new Graph( minx, maxx, miny, maxy, left, top, width, height );
 
     ctx.beginPath();
@@ -118,9 +118,6 @@ function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height
         ctx.lineTo( xp, yp );
     }
     ctx.lineTo( g.transformX( maxx ), g.transformY( miny ) );
-    callback = function( x, y ) {
-        return ctx.isPointInPath( x, y );
-    };
     ctx.closePath();
     ctx.fillStyle = color;
     ctx.fill();
