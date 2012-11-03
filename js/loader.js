@@ -29,6 +29,7 @@ $( window ).resize( onresize );
 onresize();
 
 var allColor = [ 65, 106, 225 ];
+isPoint = false;
 function drawData( json, which ) {
     ctx.clearRect( 0, 0, W, H );
     if ( json === false ) {
@@ -64,14 +65,13 @@ function drawData( json, which ) {
             }
             var xlabels = collectXLabels( dataPoints );
 
-            draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
+            draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad, isPoint );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
                 size: 12,
                 color: 'transparent',
                 fillColor: 'black',
                 family: 'Trebuchet MS'
             }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
-            break;
             break;
         case 'smart':
             var minx = Infinity, miny = Infinity;
@@ -119,8 +119,12 @@ wget( 'mobile-platforms.json', function( json ) {
 var onSmart = false,
     executed = false;
 canvas.onmousemove = function( e ) {
+    console.log( 'general mouseover' );
     if ( isPoint ) {
         onSmart = isPoint( e.clientX, e.clientY );
+    }
+    if ( onSmart ) {
+        console.log( 'Mouseover!' );
     }
     if ( !onSmart && executed ) {
         allColor[ 2 ] -= 25;
