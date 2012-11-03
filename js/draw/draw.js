@@ -59,7 +59,19 @@ function drawLegend( ctx, colors, page ) {
         ctx.fillText( "Other", x + 30, 6 * 30 + 25 );
     }
     else {
+        ctx.beginPath();
+        ctx.fillStyle = "#f48c2f";
+        ctx.fillRect( 5, 0 * 30 + 10, 20, 20 ); 
+        ctx.strokeRect( 5, 0 * 30 + 10, 20, 20 ); 
+        ctx.fillStyle = "#000";
+        ctx.fillText( "Non-smart phones", x + 30, 0 * 30 + 25 );
 
+        ctx.beginPath();
+        ctx.fillStyle = "#193585";
+        ctx.fillRect( 5, 1 * 30 + 10, 20, 20 ); 
+        ctx.strokeRect( 5, 1 * 30 + 10, 20, 20 ); 
+        ctx.fillStyle = "#000";
+        ctx.fillText( "Smartphones", x + 30, 1 * 30 + 25 );
     }
 }
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
