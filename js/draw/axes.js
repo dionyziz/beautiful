@@ -7,7 +7,7 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
 
     ctx.font = font.size + "pt " + font.family;
     var rowW = width / ( labelsx.length - 1 )
-        lineH = height / labelsy.length,
+        lineH = height / ( labelsy.length - 1 ),
         textSize = 0,
         lineHeight = ctx.measureText( "M" );
 
@@ -34,12 +34,14 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
 
         ++j;
     }
-    textSize = ctx.measureText( labelsx[ j ] );
+    /*
     ctx.beginPath();
+    textSize = ctx.measureText( labelsx[ j ] );
     ctx.strokeStyle = font.color;
-    ctx.fileStyle = font.fillColor;
+    ctx.fillStyle = font.fillColor;
     ctx.strokeText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
     ctx.fillText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
+    */
 
     j = 0;
     for ( var i = 0; i < height; i += lineH ) {

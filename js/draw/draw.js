@@ -8,33 +8,28 @@ function drawBackground( ctx, topx, topy, bottomx, bottomy, topColor, bottomColo
     ctx.fillRect( left, top, width, height );
 }
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
-    var colors = [
-        [ 0, 255, 0 ],
-        [ 255, 0, 0 ],
-        [ 0, 0, 0 ],
-        [ 0, 0, 255 ],
-        [ 255, 255, 0 ],
-        [ 255, 100, 100 ],
-        [ 255, 100, 0 ]
-    ];
-    var heightSum;
     dataPointsSets.reverse();
-    var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
-    grad.addColorStop( 0, "#365a97" );
-    grad.addColorStop( 1, "#6c78d5" );
     for ( var i = 0; i < dataPointsSets.length; ++i ) {
-        var dataPoints = dataPointsSets[ i ];
+        var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
+        var color = dataPointsSets[ i ].color;
+        grad.addColorStop( 0, 'rgb(' + color.join( ',' ) + ')' );
+        var light = lightColor( color );
+        for ( var j = 0; j < 3; ++j ) {
+            light[ j ] = Math.ceil( light[ j ] );
+        }
+        grad.addColorStop( 1, 'rgb(' + light.join( ',' ) + ')' );
+
+        var dataPoints = dataPointsSets[ i ].data;
 
         for ( var j = i + 1; j < dataPointsSets.length; ++j ) {
-            var lowerDataPoints = dataPointsSets[ j ];
+            var lowerDataPoints = dataPointsSets[ j ].data;
             for ( var key in lowerDataPoints ) {
                 dataPoints[ key ].y += lowerDataPoints[ key ].y;
             }
 
         }
 
-        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, 'rgb(' + colors.pop().join( ',' ) + ')' );
-        break;
+        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
     }
 }
 
