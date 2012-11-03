@@ -5,15 +5,31 @@
         <style>
             body {
                 margin: 0;
+                font-family: "Trebuchet MS", Verdana, sans-serif;
+                text-align: center;
+                font-size: 90%;
+            }
+            h1 {
+                font-size: 100%;
+                margin: 10px;
+            }
+            h2 {
+                font-size: 110%;
+                color: #999;
+                margin: 0;
             }
             canvas {
                 margin: auto;
                 display: block;
+                cursor: pointer;
             }
         </style>
     </head>
     <body>
+        <h1>Phone market share</h1>
+        <h2>Jan 2007 - Jan 2012</h2>
         <canvas id='canvas' width='600' height='600'></canvas>
+        <strong>Click for market breakdown</strong>
         <script src='http://code.jquery.com/jquery-1.8.2.min.js'></script>
         <script src='js/network.js'></script>        
         <script src='js/json2.js'></script>        
@@ -23,6 +39,7 @@
         <script src='js/draw/draw.js'></script>        
         <script src='js/draw/axes.js'></script>        
         <script src='js/process.js'></script>        
+        <script src='js/lagrange.js'></script>        
         <script src='js/loader.js'></script>        
     </body>
 </html>

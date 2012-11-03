@@ -10,14 +10,25 @@ var PADDING_TOP = 10,
 currentMode = 'all';
 function onresize() {
     W = $( window ).width();
-    H = $( window ).height();
+    H = $( window ).height() - 100;
     canvas.width = W;
     canvas.height = H;
     drawData( localData, currentMode );
+    switch ( currentMode ) {
+        case 'all':
+            $( 'h1' ).text( 'Phone market share - Non-smart phones VS Smart phones' );
+            $( 'strong' ).show();
+            break;
+        case 'smart':
+            $( 'h1' ).text( 'Smart phone market breakdown' );
+            $( 'strong' ).hide();
+            break;
+    }
 }
 $( window ).resize( onresize );
 onresize();
 
+var allColor = [ 65, 106, 225 ];
 function drawData( json, which ) {
     ctx.clearRect( 0, 0, W, H );
     if ( json === false ) {
@@ -45,15 +56,26 @@ function drawData( json, which ) {
             drawBackground( ctx, 0, 0, 0, height, "#f48b2d", "#fff",  width, height, top, left );
 
             var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
-            var color = [ 65, 106, 225 ];
-            var light = lightColor( color );
-            for ( var i = 0; i < 3; ++i ) {
-                light[ i ] = Math.round( light[ i ] );
-            }
-            grad.addColorStop( 0, 'rgb(' + color.join( ',' ) + ')' );
+            var light = lightColor( allColor );
+            grad.addColorStop( 0, 'rgb(' + allColor.join( ',' ) + ')' );
             grad.addColorStop( 1, 'rgb(' + light.join( ',' ) + ')' );
+            var values = [];
+            for ( var i = 0; i <= 100; i += 10 ) {
+                values.push( i + '%' );
+            }
+            var xlabels = collectXLabels( dataPoints );
+            for ( var key in dataPoints ) {
+                dataPoints[ key ].y = 1 - dataPoints[ key ].y;
+            }
 
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
+            drawAxes( ctx, left, top, width, height, xlabels, values, {
+                size: 12,
+                color: 'transparent',
+                fillColor: 'black',
+                family: 'Trebuchet MS'
+            }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
+            break;
             break;
         case 'smart':
             var minx = Infinity, miny = Infinity;
@@ -94,6 +116,34 @@ function drawData( json, which ) {
 
 wget( 'mobile-platforms.json', function( json ) {
     localData = json;
-    currentMode = 'smart';
+    currentMode = 'all';
     drawData( localData, currentMode );
 } );
+
+var onSmart = false,
+    executed = false;
+canvas.onmousemove = function( e ) {
+    if ( isPoint ) {
+        onSmart = isPoint( e.clientX, e.clientY );
+    }
+    if ( !onSmart && executed ) {
+        allColor[ 2 ] -= 25;
+        onresize();
+        executed = false;
+    }
+    if ( !executed && onSmart ) {
+        console.log( 'Mouseover!' );
+        allColor[ 2 ] += 25;
+        onresize();
+        executed = true;
+    }
+};
+canvas.onmousedown = function() {
+    if ( onSmart ) {
+        console.log( 'Smartphones clicked!' );
+        currentMode = 'smart';
+
+        canvas.style.cursor = 'default';
+        onresize();
+    }
+};

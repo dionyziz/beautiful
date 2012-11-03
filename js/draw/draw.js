@@ -57,9 +57,6 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
         var color = dataPointsSets[ i ].color;
         grad.addColorStop( 0, 'rgb(' + color.join( ',' ) + ')' );
         var light = lightColor( color );
-        for ( var j = 0; j < 3; ++j ) {
-            light[ j ] = Math.ceil( light[ j ] );
-        }
         grad.addColorStop( 1, 'rgb(' + light.join( ',' ) + ')' );
 
         var dataPoints = dataPointsSets[ i ].data;
@@ -76,6 +73,7 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
     }
 }
 
+isPoint = false;
 function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color ) {
     var g = new Graph( minx, maxx, miny, maxy, left, top, width, height );
 
@@ -90,16 +88,28 @@ function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height
     y = g.transformY( y );
 
     ctx.lineTo( x, y );
+    var polynomial = [];
     for ( var key in dataPoints ) {
         var dataPoint = dataPoints[ key ];
-        var x = dataPoint.x,
-            y = dataPoint.y;
+        polynomial.push( {
+            x: dataPoint.x,
+            y: dataPoint.y
+        } );
+    }
+    // var f = lagrange( polynomial );
 
-        x = g.transformX( x );
-        y = g.transformY( y );
-        ctx.lineTo( x, y );
+    for ( var i = 0; i < polynomial.length; ++i ) {
+        var dataPoint = polynomial[ i ];
+        var nextPoint = polynomial[ i + 1 ];
+        var xp = g.transformX( dataPoint.x );
+        var yp = g.transformY( dataPoint.y );
+
+        ctx.lineTo( xp, yp );
     }
     ctx.lineTo( g.transformX( maxx ), g.transformY( miny ) );
+    isPoint = function( x, y ) {
+        return ctx.isPointInPath( x, y );
+    };
     ctx.closePath();
     ctx.fillStyle = color;
     ctx.fill();
