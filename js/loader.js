@@ -54,7 +54,11 @@ function drawData( json, which ) {
             maxx = processed.maxx;
             miny = processed.miny;
             maxy = processed.maxy;
-            drawBackground( ctx, 0, 0, 0, height, "#f48b2d", "#fff",  width, height, top, left );
+            color = [ 249, 194, 145 ];
+            light = lightColor( color );
+            color = 'rgb( ' + color.join( ',' ) + ' )';
+            light = 'rgb( ' + light.join( ',' ) + ' )';
+            drawBackground( ctx, 0, 0, 0, height, color, light, width, height, top, left );
 
             var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
             var light = lightColor( allColor );
