@@ -3,7 +3,7 @@ var ctx = canvas.getContext( '2d' );
 var localData = false;
 var W, H;
 var PADDING_TOP = 10,
-    PADDING_RIGHT = 10,
+    PADDING_RIGHT = 150,
     PADDING_BOTTOM = 50,
     PADDING_LEFT = 100;
 
@@ -59,7 +59,15 @@ function drawData( json, which ) {
                 maxy = Math.max( processed.maxy, maxy );
             }
             drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height );
-            drawAxes( ctx, left, top, width, height, [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ], [ 'a', 'b', 'c', 'd', 'e', 'f', 'g' ], { size: 12 }, 'black', 'black' );
+            var values = [];
+            for ( var i = 0; i < 100; i += 10 ) {
+                values.push( i + '%' );
+            }
+            var xlabels = collectXLabels( dataPointsSets[ 0 ] );
+            drawAxes( ctx, left, top, width, height, xlabels, values, {
+                size: 12,
+                color: 'black'
+            }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
             break;
         default:
             break;

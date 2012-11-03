@@ -8,7 +8,7 @@ function process( obj, shareType ) {
         var dataPoint = {
             x: x,
             y: y,
-            xLabel: xLabel,
+            xLabel: xLabel.split( ' ' )[ 1 ],
             yLabel: yLabel
         };
 
@@ -37,4 +37,10 @@ function process( obj, shareType ) {
         miny: miny,
         maxy: maxy
     };
+}
+
+function collectXLabels( dataPoints ) {
+    return dataPoints.map( function( dataPoint ) {
+        return dataPoint.xLabel;
+    } );
 }
