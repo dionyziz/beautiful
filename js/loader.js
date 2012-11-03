@@ -1,4 +1,7 @@
-wget( '../mobile-platforms.json', function( json ) {
+var canvas = document.getElementsByTagName( 'canvas' );
+var ctx = canvas.getContext( '2d' );
+
+wget( 'mobile-platforms.json', function( json ) {
     data = [];
     json = JSON.parse( json );
     nonSmart = json[ 'Non-smart' ];
@@ -17,8 +20,24 @@ wget( '../mobile-platforms.json', function( json ) {
 
         data.push( dataPoint );
     }
+    var minx = Infinity, maxx = -Infinity;
+
+    for ( var dataPoint in dataPoints ) {
+        if ( dataPoint.x < minx ) {
+            minx = dataPoint.x;
+        }
+        if ( dataPoint.x > maxx ) {
+            maxx = dataPoint.x;
+        }
+        if ( dataPoint.y < miny ) {
+            miny = dataPoint.y;
+        }
+        if ( dataPoint.y > maxy ) {
+            maxy = dataPoint.y;
+        }
+    }
     data.sort( function( a, b ) {
         return a.x - b.x;
     } );
-    graph( data );
+    draw( data );
 } );
