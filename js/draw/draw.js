@@ -7,39 +7,49 @@ function drawBackground( ctx, topx, topy, bottomx, bottomy, topColor, bottomColo
     ctx.fillStyle = grad;
     ctx.fillRect( left, top, width, height );
 }
-function drawLegend( ctx, colors, page ) {
+function drawLegend( ctx, colors, page, top ) {
     var x = 5;
+    var padding = 5;
 
     ctx.font = "10pt Arial";
     ctx.strokeStyle = "#000";
 
+
     if ( page == "smart" ) {
         var devices = [ "Android", "Bada", "BlackBerry", "Symbian", "Windows Mobile/Phone", "iOS iPhone" ];
+
+        ctx.fillStyle = "#555";
+        ctx.fillRect( padding + 4, top, 180, ( devices.length + 1 ) * 30 + top );
 
         for ( var i = 0; i < devices.length; ++i ) {
             ctx.beginPath();
             ctx.fillStyle = "rgb( " + colors[ devices[ i ] ][ 0 ] + ", " + colors[ devices[ i ] ][ 1 ] + ", " + colors[ devices[ i ] ][ 2 ] + " )";
-            ctx.fillRect( 5, i * 30 + 10, 20, 20 ); 
-            ctx.strokeRect( 5, i * 30 + 10, 20, 20 ); 
-            ctx.fillText( devices[ i ], x + 30, i * 30 + 25 );
+            ctx.fillRect( padding + 9, top + i * 30 + 10, 20, 20 ); 
+            ctx.strokeRect( padding + 9, top + i * 30 + 10, 20, 20 ); 
+            ctx.fillStyle = "#fff";
+            ctx.fillText( devices[ i ], padding + x + 34, top + i * 30 + 25 );
         }
         ctx.beginPath();
         ctx.fillStyle = "#fff";
-        ctx.fillRect( 5, 6 * 30 + 10, 20, 20 ); 
-        ctx.strokeRect( 5, 6 * 30 + 10, 20, 20 ); 
-        ctx.fillStyle = "#000";
-        ctx.fillText( "Other", x + 30, 6 * 30 + 25 );
+        ctx.fillRect( padding + 9, top + 6 * 30 + 10, 20, 20 ); 
+        ctx.strokeRect( padding + 9, top + 6 * 30 + 10, 20, 20 ); 
+        ctx.fillStyle = "#fff";
+        ctx.fillText( "Other", padding + x + 34, top + 6 * 30 + 25 );
     }
     else {
         var categories = [ 'Non-smart phones', 'Smartphones' ];
         var colors = [ '#f48c2f', '#193585' ];
+
+        ctx.fillStyle = "#555";
+        ctx.fillRect( padding + 4, top, 180, ( categories.length ) * 30 + top );
+        
         for ( var i = 0; i < categories.length; ++i ) {
             ctx.beginPath();
             ctx.fillStyle = colors[ i ];
-            ctx.fillRect( 5, i * 30 + 10, 20, 20 ); 
-            ctx.strokeRect( 5, i * 30 + 10, 20, 20 ); 
-            ctx.fillStyle = "#000";
-            ctx.fillText( categories[ i ], x + 30, i * 30 + 25 );
+            ctx.fillRect( padding + 9, top + i * 30 + 10, 20, 20 ); 
+            ctx.strokeRect( padding + 9, top + i * 30 + 10, 20, 20 ); 
+            ctx.fillStyle = "#fff";
+            ctx.fillText( categories[ i ], padding + x + 34, top + i * 30 + 25 );
         }
     }
 }

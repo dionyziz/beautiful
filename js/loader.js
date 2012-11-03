@@ -60,7 +60,7 @@ function drawData( json, which ) {
         height = H - PADDING_TOP - PADDING_BOTTOM;
     json = JSON.parse( json );
     var dataPoints;
-    var colors = { 'Symbian': [ 253, 200, 47 ], 'iOS iPhone': [ 211, 211, 212 ], 'BlackBerry': [ 44, 44, 44 ], 'Android': [ 151, 192, 62 ], 'Windows Mobile/Phone': [ 0, 165, 227 ], 'Bada': [ 4, 78, 92 ] };
+    var colors = { 'Symbian': [ 253, 200, 47 ], 'iOS iPhone': [ 133, 133, 133 ], 'BlackBerry': [ 44, 44, 44 ], 'Android': [ 151, 192, 62 ], 'Windows Mobile/Phone': [ 0, 165, 227 ], 'Bada': [ 4, 78, 92 ] };
 
     switch ( which ) { 
         case 'all':
@@ -91,12 +91,12 @@ function drawData( json, which ) {
                 dataPoints[ key ].y = 1 - dataPoints[ key ].y;
             }
 
-            drawLegend( ctx, colors, 'all' );
+            drawLegend( ctx, colors, 'all', top, left );
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad, graphAnimation );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
                 size: 12,
                 color: 'transparent',
-                fillColor: 'black',
+                fillColor: '#999',
                 family: 'Trebuchet MS'
             }, {
                 size: 12,
@@ -117,12 +117,13 @@ function drawData( json, which ) {
                 dataPoints = json[ key ];
                 var processed = process( dataPoints, 'smartphoneShare' );
                 dataPointsSets.push( { color: colors[ key ], data: processed.dataPoints } );
-                drawLegend( ctx, colors, 'smart' );
+                drawLegend( ctx, colors, 'smart', top );
                 minx = Math.min( processed.minx, minx );
                 maxx = Math.max( processed.maxx, maxx );
                 miny = Math.min( processed.miny, miny );
                 maxy = Math.max( processed.maxy, maxy );
             }
+            drawBackground( ctx, 0, 0, 0, height, "#eee", "#eee", width, height, top, left );
             drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height, graphAnimation );
             var values = [];
             for ( var i = 0; i <= 100; i += 10 ) {
@@ -132,7 +133,7 @@ function drawData( json, which ) {
             drawAxes( ctx, left, top, width, height, xlabels, values, {
                 size: 12,
                 color: 'transparent',
-                fillColor: 'black',
+                fillColor: '#999',
                 family: 'Trebuchet MS'
             }, {
                 size: 12,
