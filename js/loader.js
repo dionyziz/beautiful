@@ -69,6 +69,7 @@ function drawData( json, which ) {
                 dataPoints[ key ].y = 1 - dataPoints[ key ].y;
             }
 
+            drawLegend( ctx, colors, 'all' );
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad, isPoint );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
                 size: 12,
@@ -89,7 +90,7 @@ function drawData( json, which ) {
                 dataPoints = json[ key ];
                 var processed = process( dataPoints, 'smartphoneShare' );
                 dataPointsSets.push( { color: colors[ key ], data: processed.dataPoints } );
-                drawLegend( ctx, colors );
+                drawLegend( ctx, colors, 'smart' );
                 minx = Math.min( processed.minx, minx );
                 maxx = Math.max( processed.maxx, maxx );
                 miny = Math.min( processed.miny, miny );

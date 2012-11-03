@@ -116,4 +116,7 @@ function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height
     ctx.closePath();
     ctx.fillStyle = color;
     ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.stroke();
 }
