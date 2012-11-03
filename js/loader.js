@@ -46,6 +46,7 @@ function drawData( json, which ) {
             var minx = Infinity, miny = Infinity;
             var maxx = 0, maxy = 0;
             var dataPointsSets = [];
+            var colors = { 'Symbian': [ 231, 191, 109 ], 'iOS iPhone': [ 211, 211, 212 ], 'BlackBerry': [ 44, 44, 44 ], 'Android': [ 151, 192, 62 ], 'Windows Mobile/Phone': [ 0, 165, 227 ], 'Bada': [ 4, 78, 92 ] };
             for ( var key in json ) {
                 if ( key == 'Non-smart' ) {
                     continue;
@@ -53,18 +54,19 @@ function drawData( json, which ) {
                 
                 dataPoints = json[ key ];
                 var processed = process( dataPoints, 'smartphoneShare' );
-                dataPointsSets.push( processed.dataPoints );
+                dataPointsSets.push( { color: colors[ key ], data: processed.dataPoints } );
                 minx = Math.min( processed.minx, minx );
                 maxx = Math.max( processed.maxx, maxx );
                 miny = Math.min( processed.miny, miny );
                 maxy = Math.max( processed.maxy, maxy );
             }
+            console.log( dataPointsSets );
             drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height );
             var values = [];
             for ( var i = 0; i <= 100; i += 10 ) {
                 values.push( i + '%' );
             }
-            var xlabels = collectXLabels( dataPointsSets[ 0 ] );
+            var xlabels = collectXLabels( dataPointsSets[ 0 ].data );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
                 size: 12,
                 color: 'transparent',
