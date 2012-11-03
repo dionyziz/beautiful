@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <canvas id='canvas' width='1000' height='1000'></canvas>
+        <script type='text/javascript' src='axes.js'></script>
+        <script type='text/javascript'>
+            var canvas = document.getElementById( 'canvas' );
+            var ctx = canvas.getContext( '2d' );
+
+            var labelsx = [],
+                labelsy = [];
+
+            for ( i = 0; i < 20; ++i ) {
+                labelsx[ i ] = "Jun";
+            }
+
+            for ( i = 1; i <= 10; ++i ) {
+                labelsy[ i - 1 ] = i * 10 + "%";
+            }
+
+            drawAxes( ctx, 10, 10, 800, 800, labelsx, labelsy, { size: 10, color: "#000" }, "#F00", "#0F0" );
+        </script>
+    </body>
+</html>
