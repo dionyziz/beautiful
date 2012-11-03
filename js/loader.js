@@ -26,48 +26,41 @@ function drawData( json, which ) {
         top = PADDING_TOP,
         width = W - PADDING_LEFT - PADDING_RIGHT,
         height = H - PADDING_TOP - PADDING_BOTTOM;
-    var dataPoints = [];
     json = JSON.parse( json );
 
     switch ( which ) { 
         case 'all':
             var nonSmart = json[ 'Non-smart' ];
+            var processed = process( nonSmart, 'phoneShare' );
 
-            for ( var key in nonSmart ) {
-                var x = parseDate( key );
-                var y = 1 - nonSmart[ key ].phoneShare;
-                var xLabel = key;
-                var yLabel = Math.round( 100 * nonSmart[ key ].phoneShare ) + '%';
-                var dataPoint = {
-                    x: x,
-                    y: y,
-                    xLabel: xLabel,
-                    yLabel: yLabel
-                };
-
-                dataPoints.push( dataPoint );
-            }
-            var minx = Infinity, maxx = -Infinity, miny = 0, maxy = 1;
-
-            for ( var key in dataPoints ) {
-                var dataPoint = dataPoints[ key ];
-
-                if ( dataPoint.x < minx ) {
-                    minx = dataPoint.x;
-                }
-                if ( dataPoint.x > maxx ) {
-                    maxx = dataPoint.x;
-                }
-            }
-            dataPoints.sort( function( a, b ) {
-                return a.x - b.x;
-            } );
+            dataPoints = processed.dataPoints;
+            minx = processed.minx;
+            maxx = processed.maxx;
+            miny = processed.miny;
+            maxy = processed.maxy;
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height );
             break;
         case 'smart':
+            var minx = miny = Infinity;
+            var maxx = maxy = 0;
+            dataPointsSets = [];
+            for ( var key in json ) {
+                if ( key == 'Non-smart' ) {
+                    continue;
+                }
+                
+                dataPoints = json[ key ];
+                processed = process( dataPoints, 'smartphoneShare' );
+                dataPointsSets.push( processed.dataPoints );
+                minx = Math.min( processed.minx, minx );
+                maxx = Math.max( processed.maxx, maxx );
+                miny = Math.min( processed.miny, miny );
+                maxy = Math.max( processed.maxy, maxy );
+            }
             drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height );
             break;
         default:
+            break;
     }
 }
 
