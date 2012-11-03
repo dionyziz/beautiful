@@ -46,7 +46,7 @@ function drawData( json, which ) {
         height = H - PADDING_TOP - PADDING_BOTTOM;
     json = JSON.parse( json );
     var dataPoints;
-    var colors = { 'Symbian': [ 231, 191, 109 ], 'iOS iPhone': [ 211, 211, 212 ], 'BlackBerry': [ 44, 44, 44 ], 'Android': [ 151, 192, 62 ], 'Windows Mobile/Phone': [ 0, 165, 227 ], 'Bada': [ 4, 78, 92 ] };
+    var colors = { 'Symbian': [ 253, 200, 47 ], 'iOS iPhone': [ 211, 211, 212 ], 'BlackBerry': [ 44, 44, 44 ], 'Android': [ 151, 192, 62 ], 'Windows Mobile/Phone': [ 0, 165, 227 ], 'Bada': [ 4, 78, 92 ] };
 
     switch ( which ) { 
         case 'all':
