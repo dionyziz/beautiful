@@ -7,6 +7,18 @@ var PADDING_TOP = 10,
     PADDING_BOTTOM = 50,
     PADDING_LEFT = 200;
 var animating = false;
+var graphAnimation = 0;
+
+function playGraphAnimation() {
+    graphAnimation += 0.02;
+    if ( graphAnimation > 1 ) {
+        graphAnimation = 1;
+    }
+    else {
+        setTimeout( playGraphAnimation, 20 );
+    }
+    onresize();
+}
 
 currentMode = 'all';
 function onresize() {
@@ -28,6 +40,8 @@ function onresize() {
 }
 $( window ).resize( onresize );
 onresize();
+
+playGraphAnimation();
 
 var allColor = [ 65, 106, 225 ];
 isPoint = false;
@@ -78,7 +92,7 @@ function drawData( json, which ) {
             }
 
             drawLegend( ctx, colors, 'all' );
-            draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad, isPoint );
+            draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad, graphAnimation );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
                 size: 12,
                 color: 'transparent',
@@ -109,8 +123,7 @@ function drawData( json, which ) {
                 miny = Math.min( processed.miny, miny );
                 maxy = Math.max( processed.maxy, maxy );
             }
-            console.log( dataPointsSets );
-            drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height );
+            drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height, graphAnimation );
             var values = [];
             for ( var i = 0; i <= 100; i += 10 ) {
                 values.push( i + '%' );
@@ -152,6 +165,8 @@ canvas.onmousedown = function() {
         animating = false;
         onresize();
         animating = true;
+        graphAnimation = 0;
+        playGraphAnimation();
         $( 'canvas' ).fadeIn( 300, function() {
             animating = false;
             onresize();

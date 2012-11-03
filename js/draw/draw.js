@@ -9,7 +9,6 @@ function drawBackground( ctx, topx, topy, bottomx, bottomy, topColor, bottomColo
 }
 function drawLegend( ctx, colors, page ) {
     var x = 5;
-    console.log( colors );
 
     ctx.font = "10pt Arial";
     ctx.strokeStyle = "#000";
@@ -74,7 +73,7 @@ function drawLegend( ctx, colors, page ) {
         ctx.fillText( "Smartphones", x + 30, 1 * 30 + 25 );
     }
 }
-function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
+function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height, animatepercentage ) {
     dataPointsSets.reverse();
     for ( var i = 0; i < dataPointsSets.length; ++i ) {
         var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
@@ -93,12 +92,16 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
 
         }
 
-        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
+        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad, animatepercentage );
     }
 }
 
-function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color ) {
+function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color, animatepercentage ) {
     var g = new Graph( minx, maxx, miny, maxy, left, top, width, height );
+
+    if ( typeof animatepercentage == 'undefined' ) {
+        animatepercentage = 1;
+    }
 
     ctx.beginPath();
 
@@ -116,7 +119,7 @@ function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height
         var dataPoint = dataPoints[ key ];
         polynomial.push( {
             x: dataPoint.x,
-            y: dataPoint.y
+            y: dataPoint.y * animatepercentage
         } );
     }
     // var f = lagrange( polynomial );
