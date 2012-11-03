@@ -34,12 +34,14 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
 
         ++j;
     }
+    /*
     ctx.beginPath();
     textSize = ctx.measureText( labelsx[ j ] );
     ctx.strokeStyle = font.color;
     ctx.fillStyle = font.fillColor;
     ctx.strokeText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
     ctx.fillText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
+    */
 
     j = 0;
     for ( var i = 0; i < height; i += lineH ) {
