@@ -1,4 +1,4 @@
-wget( 'mobile-platforms.json', function( json ) {
+wget( '../mobile-platforms.json', function( json ) {
     data = [];
     json = JSON.parse( json );
     nonSmart = json[ 'Non-smart' ];
