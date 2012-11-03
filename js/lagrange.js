@@ -1,19 +1,18 @@
 function lagrange( points ) {
     function l( j, x, points ) {
         var P = 1;
-        var i = 0;
-        for ( i = 0; i < points.length; ++i ) {
-            if ( i != j ) {
-                P *= ( x - points[ i ].x )/( points[ j ].x - points[ i ].x );
+
+        for ( var m = 0; m < points.length; ++m ) {
+            if ( m != j ) {
+                P *= ( x - points[ m ].x ) / ( points[ j ].x - points[ m ].x );
             }
         }
         return P;
     }
     return function( x ) {
         var S = 0;
-        var i = 0;
-        for ( i = 0; i < points.length; ++i ) {
-            S += points[ i ].y * l( i, x, points );
+        for ( var j = 0; j < points.length; ++j ) {
+            S += points[ j ].y * l( j, x, points );
         }
         return S;
     };
