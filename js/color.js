@@ -61,3 +61,10 @@ function hslToRgb( h, s, l ) {
 
     return [ r * 255, g * 255, b * 255 ];
 }
+
+function lightColor( rgb ) {
+    var hsl = rgbToHsl( rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] );
+    hsl[ 2 ] -= 0.2;
+    
+    return hslToRgb( hsl[ 0 ], hsl[ 1 ], hsl[ 2 ] );
+}
