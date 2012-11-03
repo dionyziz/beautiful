@@ -5,7 +5,7 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
     ctx.strokeStyle = rectColor;
     ctx.stroke();
 
-    ctx.font = font.size + "pt Arial";
+    ctx.font = font.size + "pt " + font.family;
     var rowW = width / ( labelsx.length - 1 )
         lineH = height / labelsy.length,
         textSize = 0,
@@ -17,7 +17,6 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
 
     var j = 0;
     for ( var i = 0; i <= width; i += rowW ) {
-
         if ( i != 0 ) {
             ctx.beginPath();
             ctx.strokeStyle = gridColor;
@@ -29,16 +28,18 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
         ctx.beginPath();
         textSize = ctx.measureText( labelsx[ j ] );
         ctx.strokeStyle = font.color;
+        ctx.fillStyle = font.fillColor;
         ctx.strokeText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
-        ctx.stroke();
+        ctx.fillText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
 
         ++j;
     }
     textSize = ctx.measureText( labelsx[ j ] );
     ctx.beginPath();
     ctx.strokeStyle = font.color;
+    ctx.fileStyle = font.fillColor;
     ctx.strokeText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
-    ctx.stroke();
+    ctx.fillText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
 
     j = 0;
     for ( var i = 0; i < height; i += lineH ) {
@@ -53,8 +54,9 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, font, gridCo
         textSize = ctx.measureText( labelsy[ j ] );
         ctx.beginPath();
         ctx.strokeStyle = font.color;
+        ctx.fillStyle = font.fillColor;
         ctx.strokeText( labelsy[ j ], left + width - textSize.width - 2, i + top + lineH - 3 );
-        ctx.stroke();
+        ctx.fillText( labelsy[ j ], left + width - textSize.width - 2, i + top + lineH - 3 );
 
         ++j;
     }

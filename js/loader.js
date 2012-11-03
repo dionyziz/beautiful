@@ -66,7 +66,9 @@ function drawData( json, which ) {
             var xlabels = collectXLabels( dataPointsSets[ 0 ] );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
                 size: 12,
-                color: 'black'
+                color: 'transparent',
+                fillColor: 'black',
+                family: 'Trebuchet MS'
             }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
             break;
         default:
