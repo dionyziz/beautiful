@@ -14,14 +14,14 @@ var Graph = function( minx, maxx, miny, maxy, left, top, width, height ) {
 
 Graph.prototype.transformX = function( x ) {
     var padX = this.width / ( this.maxx - this.minx );
-    var xx = padX * x;
+    var xx = padX * ( x - this.minx );
 
     return xx + this.left;
 };
 
 Graph.prototype.transformY = function( y ) {
     var padY = this.height / ( this.maxy - this.miny );
-    var yy = padY * y;
+    var yy = padY * ( y - this.miny );
     
     return this.height - yy + this.top;
 };

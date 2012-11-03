@@ -1,14 +1,38 @@
-var canvas = document.getElementsByTagName( 'canvas' );
+var canvas = document.getElementsByTagName( 'canvas' )[ 0 ];
 var ctx = canvas.getContext( '2d' );
+var localData = false;
+var W, H;
+var PADDING_TOP = 10,
+    PADDING_RIGHT = 10,
+    PADDING_BOTTOM = 10,
+    PADDING_LEFT = 100;
 
-wget( 'mobile-platforms.json', function( json ) {
-    data = [];
+function onresize() {
+    W = $( window ).width();
+    H = $( window ).height();
+    canvas.width = W;
+    canvas.height = H;
+    drawData( localData );
+}
+$( window ).resize( onresize );
+onresize();
+
+function drawData( json ) {
+    if ( json === false ) {
+        return;
+    }
+
+    var left = PADDING_LEFT,
+        top = PADDING_TOP,
+        width = W - PADDING_LEFT - PADDING_RIGHT,
+        height = H - PADDING_TOP - PADDING_BOTTOM;
+    var dataPoints = [];
     json = JSON.parse( json );
-    nonSmart = json[ 'Non-smart' ];
+    var nonSmart = json[ 'Non-smart' ];
 
-    for ( key in nonSmart ) {
+    for ( var key in nonSmart ) {
         var x = parseDate( key );
-        var y = nonSmart[ key ].phoneShare;
+        var y = 1 - nonSmart[ key ].phoneShare;
         var xLabel = key;
         var yLabel = Math.round( 100 * nonSmart[ key ].phoneShare ) + '%';
         var dataPoint = {
@@ -18,26 +42,27 @@ wget( 'mobile-platforms.json', function( json ) {
             yLabel: yLabel
         };
 
-        data.push( dataPoint );
+        dataPoints.push( dataPoint );
     }
-    var minx = Infinity, maxx = -Infinity;
+    var minx = Infinity, maxx = -Infinity, miny = 0, maxy = 1;
 
-    for ( var dataPoint in dataPoints ) {
+    for ( var key in dataPoints ) {
+        var dataPoint = dataPoints[ key ];
+
         if ( dataPoint.x < minx ) {
             minx = dataPoint.x;
         }
         if ( dataPoint.x > maxx ) {
             maxx = dataPoint.x;
         }
-        if ( dataPoint.y < miny ) {
-            miny = dataPoint.y;
-        }
-        if ( dataPoint.y > maxy ) {
-            maxy = dataPoint.y;
-        }
     }
-    data.sort( function( a, b ) {
+    dataPoints.sort( function( a, b ) {
         return a.x - b.x;
     } );
-    draw( data );
+    draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height );
+}
+
+wget( 'mobile-platforms.json', function( json ) {
+    localData = json;
+    drawData( localData );
 } );
