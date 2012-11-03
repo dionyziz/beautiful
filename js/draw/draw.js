@@ -14,9 +14,6 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
         var color = dataPointsSets[ i ].color;
         grad.addColorStop( 0, 'rgb(' + color.join( ',' ) + ')' );
         var light = lightColor( color );
-        for ( var j = 0; j < 3; ++j ) {
-            light[ j ] = Math.ceil( light[ j ] );
-        }
         grad.addColorStop( 1, 'rgb(' + light.join( ',' ) + ')' );
 
         var dataPoints = dataPointsSets[ i ].data;
@@ -33,6 +30,7 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
     }
 }
 
+isPoint = false;
 function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color ) {
     var g = new Graph( minx, maxx, miny, maxy, left, top, width, height );
 
@@ -66,6 +64,9 @@ function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height
         ctx.lineTo( xp, yp );
     }
     ctx.lineTo( g.transformX( maxx ), g.transformY( miny ) );
+    isPoint = function( x, y ) {
+        return ctx.isPointInPath( x, y );
+    };
     ctx.closePath();
     ctx.fillStyle = color;
     ctx.fill();
