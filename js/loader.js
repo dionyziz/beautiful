@@ -3,8 +3,8 @@ var ctx = canvas.getContext( '2d' );
 var localData = false;
 var W, H;
 var PADDING_TOP = 10,
-    PADDING_RIGHT = 10,
-    PADDING_BOTTOM = 10,
+    PADDING_RIGHT = 150,
+    PADDING_BOTTOM = 50,
     PADDING_LEFT = 100;
 
 function onresize() {
@@ -27,6 +27,7 @@ function drawData( json, which ) {
         width = W - PADDING_LEFT - PADDING_RIGHT,
         height = H - PADDING_TOP - PADDING_BOTTOM;
     json = JSON.parse( json );
+    var dataPoints;
 
     switch ( which ) { 
         case 'all':
@@ -42,16 +43,16 @@ function drawData( json, which ) {
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height );
             break;
         case 'smart':
-            var minx = miny = Infinity;
-            var maxx = maxy = 0;
-            dataPointsSets = [];
+            var minx = Infinity, miny = Infinity;
+            var maxx = 0, maxy = 0;
+            var dataPointsSets = [];
             for ( var key in json ) {
                 if ( key == 'Non-smart' ) {
                     continue;
                 }
                 
                 dataPoints = json[ key ];
-                processed = process( dataPoints, 'smartphoneShare' );
+                var processed = process( dataPoints, 'smartphoneShare' );
                 dataPointsSets.push( processed.dataPoints );
                 minx = Math.min( processed.minx, minx );
                 maxx = Math.max( processed.maxx, maxx );
@@ -59,6 +60,15 @@ function drawData( json, which ) {
                 maxy = Math.max( processed.maxy, maxy );
             }
             drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height );
+            var values = [];
+            for ( var i = 0; i < 100; i += 10 ) {
+                values.push( i + '%' );
+            }
+            var xlabels = collectXLabels( dataPointsSets[ 0 ] );
+            drawAxes( ctx, left, top, width, height, xlabels, values, {
+                size: 12,
+                color: 'black'
+            }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
             break;
         default:
             break;

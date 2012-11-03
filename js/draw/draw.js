@@ -8,7 +8,15 @@ function drawBackground( ctx, topx, topy, bottomx, bottomy, topColor, bottomColo
     ctx.fillRect( left, top, width, height );
 }
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
-    var colors = [ 'green', 'red', 'black', 'blue' ];
+    var colors = [
+        [ 0, 255, 0 ],
+        [ 255, 0, 0 ],
+        [ 0, 0, 0 ],
+        [ 0, 0, 255 ],
+        [ 255, 255, 0 ],
+        [ 255, 100, 100 ],
+        [ 255, 100, 0 ]
+    ];
     var heightSum;
     dataPointsSets.reverse();
     var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
@@ -20,18 +28,16 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
         for ( var j = i + 1; j < dataPointsSets.length; ++j ) {
             var lowerDataPoints = dataPointsSets[ j ];
             for ( var key in lowerDataPoints ) {
-                dataPoints[ key ] += lowerDataPoints[ key ];
+                dataPoints[ key ].y += lowerDataPoints[ key ].y;
             }
 
         }
 
-        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
+        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, 'rgb(' + colors.pop().join( ',' ) + ')' );
     }
 }
 
 function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color ) {
-    console.log( dataPoints.length );
-
     var g = new Graph( minx, maxx, miny, maxy, left, top, width, height );
 
     ctx.beginPath();
