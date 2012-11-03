@@ -61,13 +61,15 @@ function drawData( json, which ) {
             }
             drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height );
             var values = [];
-            for ( var i = 0; i < 100; i += 10 ) {
+            for ( var i = 0; i <= 100; i += 10 ) {
                 values.push( i + '%' );
             }
             var xlabels = collectXLabels( dataPointsSets[ 0 ] );
             drawAxes( ctx, left, top, width, height, xlabels, values, {
                 size: 12,
-                color: 'black'
+                color: 'transparent',
+                fillColor: 'black',
+                family: 'Trebuchet MS'
             }, 'rgba( 255, 255, 255, 0.5 )', 'black' );
             break;
         default:
