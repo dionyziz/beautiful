@@ -18,6 +18,7 @@ function onresize() {
 $( window ).resize( onresize );
 onresize();
 
+var allColor = [ 65, 106, 225 ];
 function drawData( json, which ) {
     ctx.clearRect( 0, 0, W, H );
     if ( json === false ) {
@@ -44,12 +45,8 @@ function drawData( json, which ) {
             drawBackground( ctx, 0, 0, 0, height, "#f48b2d", "#fff",  width, height, top, left );
 
             var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
-            var color = [ 65, 106, 225 ];
-            var light = lightColor( color );
-            for ( var i = 0; i < 3; ++i ) {
-                light[ i ] = Math.round( light[ i ] );
-            }
-            grad.addColorStop( 0, 'rgb(' + color.join( ',' ) + ')' );
+            var light = lightColor( allColor );
+            grad.addColorStop( 0, 'rgb(' + allColor.join( ',' ) + ')' );
             grad.addColorStop( 1, 'rgb(' + light.join( ',' ) + ')' );
 
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
@@ -93,6 +90,32 @@ function drawData( json, which ) {
 
 wget( 'mobile-platforms.json', function( json ) {
     localData = json;
-    currentMode = 'smart';
+    currentMode = 'all';
     drawData( localData, currentMode );
 } );
+
+var onSmart = false,
+    executed = false;
+canvas.onmousemove = function( e ) {
+    if ( isPoint ) {
+        onSmart = isPoint( e.clientX, e.clientY );
+    }
+    if ( !onSmart && executed ) {
+        allColor[ 2 ] -= 25;
+        onresize();
+        executed = false;
+    }
+    if ( !executed && onSmart ) {
+        console.log( 'Mouseover!' );
+        allColor[ 2 ] += 25;
+        onresize();
+        executed = true;
+    }
+};
+canvas.onmousedown = function() {
+    if ( onSmart ) {
+        console.log( 'Smartphones clicked!' );
+        currentMode = 'smart';
+        onresize();
+    }
+};
