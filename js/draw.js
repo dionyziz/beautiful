@@ -1,13 +1,23 @@
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
-    for ( var key in dataPointsSets ) {
-        var dataPoints = dataPointsSets[ key ];
-        /* if ( ) {
-        } */
-        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height );
+    var colors = [ 'green', 'red', 'black', 'blue' ];
+    var heightSum;
+    dataPointsSets.reverse();
+    for ( var i = 0; i < dataPointsSets.length; ++i ) {
+        var dataPoints = dataPointsSets[ i ];
+
+        for ( var j = i + 1; j < dataPointsSets.length; ++j ) {
+            var lowerDataPoints = dataPointsSets[ j ];
+            for ( var key in lowerDataPoints ) {
+                dataPoints[ key ] += lowerDataPoints[ key ];
+            }
+
+        }
+
+        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, colors.pop() );
     }
 }
 
-function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height ) {
+function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, color ) {
     console.log( dataPoints.length );
 
     var g = new Graph( minx, maxx, miny, maxy, left, top, width, height );
@@ -34,6 +44,6 @@ function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height
     }
     ctx.lineTo( g.transformX( maxx ), g.transformY( miny ) );
     ctx.closePath();
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = color;
     ctx.fill();
 }

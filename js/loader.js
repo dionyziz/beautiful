@@ -12,12 +12,12 @@ function onresize() {
     H = $( window ).height();
     canvas.width = W;
     canvas.height = H;
-    drawData( localData );
+    drawData( localData, 'smart' );
 }
 $( window ).resize( onresize );
 onresize();
 
-function drawData( json ) {
+function drawData( json, which ) {
     if ( json === false ) {
         return;
     }
@@ -28,41 +28,50 @@ function drawData( json ) {
         height = H - PADDING_TOP - PADDING_BOTTOM;
     var dataPoints = [];
     json = JSON.parse( json );
-    var nonSmart = json[ 'Non-smart' ];
 
-    for ( var key in nonSmart ) {
-        var x = parseDate( key );
-        var y = 1 - nonSmart[ key ].phoneShare;
-        var xLabel = key;
-        var yLabel = Math.round( 100 * nonSmart[ key ].phoneShare ) + '%';
-        var dataPoint = {
-            x: x,
-            y: y,
-            xLabel: xLabel,
-            yLabel: yLabel
-        };
+    switch ( which ) { 
+        case 'all':
+            var nonSmart = json[ 'Non-smart' ];
 
-        dataPoints.push( dataPoint );
+            for ( var key in nonSmart ) {
+                var x = parseDate( key );
+                var y = 1 - nonSmart[ key ].phoneShare;
+                var xLabel = key;
+                var yLabel = Math.round( 100 * nonSmart[ key ].phoneShare ) + '%';
+                var dataPoint = {
+                    x: x,
+                    y: y,
+                    xLabel: xLabel,
+                    yLabel: yLabel
+                };
+
+                dataPoints.push( dataPoint );
+            }
+            var minx = Infinity, maxx = -Infinity, miny = 0, maxy = 1;
+
+            for ( var key in dataPoints ) {
+                var dataPoint = dataPoints[ key ];
+
+                if ( dataPoint.x < minx ) {
+                    minx = dataPoint.x;
+                }
+                if ( dataPoint.x > maxx ) {
+                    maxx = dataPoint.x;
+                }
+            }
+            dataPoints.sort( function( a, b ) {
+                return a.x - b.x;
+            } );
+            draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height );
+            break;
+        case 'smart':
+            drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height );
+            break;
+        default:
     }
-    var minx = Infinity, maxx = -Infinity, miny = 0, maxy = 1;
-
-    for ( var key in dataPoints ) {
-        var dataPoint = dataPoints[ key ];
-
-        if ( dataPoint.x < minx ) {
-            minx = dataPoint.x;
-        }
-        if ( dataPoint.x > maxx ) {
-            maxx = dataPoint.x;
-        }
-    }
-    dataPoints.sort( function( a, b ) {
-        return a.x - b.x;
-    } );
-    draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height );
 }
 
 wget( 'mobile-platforms.json', function( json ) {
     localData = json;
-    drawData( localData );
+    drawData( localData, 'smart' );
 } );
