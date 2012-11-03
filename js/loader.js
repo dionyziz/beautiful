@@ -7,17 +7,19 @@ var PADDING_TOP = 10,
     PADDING_BOTTOM = 50,
     PADDING_LEFT = 100;
 
+currentMode = 'all';
 function onresize() {
     W = $( window ).width();
     H = $( window ).height();
     canvas.width = W;
     canvas.height = H;
-    drawData( localData, 'smart' );
+    drawData( localData, currentMode );
 }
 $( window ).resize( onresize );
 onresize();
 
 function drawData( json, which ) {
+    ctx.clearRect( 0, 0, W, H );
     if ( json === false ) {
         return;
     }
@@ -40,7 +42,17 @@ function drawData( json, which ) {
             miny = processed.miny;
             maxy = processed.maxy;
             drawBackground( ctx, 0, 0, 0, height, "#f48b2d", "#fff",  width, height, top, left );
-            draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height );
+
+            var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
+            var color = [ 65, 106, 225 ];
+            var light = lightColor( color );
+            for ( var i = 0; i < 3; ++i ) {
+                light[ i ] = Math.round( light[ i ] );
+            }
+            grad.addColorStop( 0, 'rgb(' + color.join( ',' ) + ')' );
+            grad.addColorStop( 1, 'rgb(' + light.join( ',' ) + ')' );
+
+            draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
             break;
         case 'smart':
             var minx = Infinity, miny = Infinity;
@@ -79,5 +91,6 @@ function drawData( json, which ) {
 
 wget( 'mobile-platforms.json', function( json ) {
     localData = json;
-    drawData( localData, 'smart' );
+    currentMode = 'smart';
+    drawData( localData, currentMode );
 } );
