@@ -7,7 +7,7 @@ function drawBackground( ctx, topx, topy, bottomx, bottomy, topColor, bottomColo
     ctx.fillStyle = grad;
     ctx.fillRect( left, top, width, height );
 }
-function drawLegend( ctx, colors, " ) {
+function drawLegend( ctx, colors, page ) {
     var x = 5;
     console.log( colors );
 
