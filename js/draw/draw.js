@@ -54,6 +54,7 @@ function drawLegend( ctx, colors ) {
     ctx.fillStyle = "#fff";
     ctx.fillRect( 5, 6 * 30 + 10, 20, 20 ); 
     ctx.strokeRect( 5, 6 * 30 + 10, 20, 20 ); 
+    ctx.fillStyle = "#000";
     ctx.fillText( "Other", x + 30, 6 * 30 + 25 );
 }
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
