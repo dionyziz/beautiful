@@ -2,6 +2,9 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
     var colors = [ 'green', 'red', 'black', 'blue' ];
     var heightSum;
     dataPointsSets.reverse();
+    var grad = ctx.createLinearGradient( 0, 0, 0, height + top );
+    grad.addColorStop( 0, "#365a97" );
+    grad.addColorStop( 1, "#6c78d5" );
     for ( var i = 0; i < dataPointsSets.length; ++i ) {
         var dataPoints = dataPointsSets[ i ];
 
@@ -13,7 +16,7 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
 
         }
 
-        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, colors.pop() );
+        draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, grad );
     }
 }
 
