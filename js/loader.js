@@ -38,6 +38,7 @@ function drawData( json, which ) {
             maxx = processed.maxx;
             miny = processed.miny;
             maxy = processed.maxy;
+            drawBackground( ctx, 0, 0, 0, height, "#f48b2d", "#fff",  width, height, top, left );
             draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height );
             break;
         case 'smart':

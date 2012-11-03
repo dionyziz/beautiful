@@ -1,3 +1,12 @@
+function drawBackground( ctx, topx, topy, bottomx, bottomy, topColor, bottomColor, width, height, top, left ) {
+    var grad = ctx.createLinearGradient( topx + left, topy + top, bottomx + left, bottomy + top );
+    grad.addColorStop( 0, topColor );
+    grad.addColorStop( 1, bottomColor );
+
+    ctx.beginPath()
+    ctx.fillStyle = grad;
+    ctx.fillRect( left, top, width, height );
+}
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
     var colors = [ 'green', 'red', 'black', 'blue' ];
     var heightSum;
