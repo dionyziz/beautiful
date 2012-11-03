@@ -120,28 +120,6 @@ wget( 'mobile-platforms.json', function( json ) {
     drawData( localData, currentMode );
 } );
 
-var onSmart = false,
-    executed = false;
-canvas.onmousemove = function( e ) {
-    console.log( 'general mouseover' );
-    if ( isPoint ) {
-        onSmart = isPoint( e.clientX, e.clientY );
-    }
-    if ( onSmart ) {
-        console.log( 'Mouseover!' );
-    }
-    if ( !onSmart && executed ) {
-        allColor[ 2 ] -= 25;
-        onresize();
-        executed = false;
-    }
-    if ( !executed && onSmart ) {
-        console.log( 'Mouseover!' );
-        allColor[ 2 ] += 25;
-        onresize();
-        executed = true;
-    }
-};
 canvas.onmousedown = function() {
     if ( currentMode == 'smart' ) {
         currentMode = 'all';
