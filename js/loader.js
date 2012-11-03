@@ -138,6 +138,8 @@ canvas.onmousedown = function() {
     if ( onSmart ) {
         console.log( 'Smartphones clicked!' );
         currentMode = 'smart';
+
+        canvas.style.cursor = 'default';
         onresize();
     }
 };
