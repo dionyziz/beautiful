@@ -34,6 +34,7 @@ function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, w
         }
 
         draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height, 'rgb(' + colors.pop().join( ',' ) + ')' );
+        break;
     }
 }
 
@@ -51,14 +52,31 @@ function draw( ctx, dataPoints, minx, maxx, miny, maxy, left, top, width, height
     y = g.transformY( y );
 
     ctx.lineTo( x, y );
+    var polynomial = [];
     for ( var key in dataPoints ) {
         var dataPoint = dataPoints[ key ];
-        var x = dataPoint.x,
-            y = dataPoint.y;
+        polynomial.push( {
+            x: dataPoint.x,
+            y: dataPoint.y
+        } );
+    }
+    var f = lagrange( polynomial );
 
-        x = g.transformX( x );
-        y = g.transformY( y );
-        ctx.lineTo( x, y );
+    for ( var i = 0; i < polynomial.length - 1; ++i ) {
+        var dataPoint = polynomial[ i ];
+        var nextPoint = polynomial[ i + 1 ];
+        var xp = g.transformX( dataPoint.x );
+        var yp = g.transformY( f( dataPoint.x ) );
+
+        for ( var j = 0; j <= 0; j += 0.01 ) {
+            // tween
+            x = dataPoint.x + ( nextPoint.x - dataPoint.x ) * j;
+            y = f( x );
+            console.log( x, y );
+            xp = g.transformX( x );
+            yp = g.transformY( y );
+            ctx.lineTo( xp, yp );
+        }
     }
     ctx.lineTo( g.transformX( maxx ), g.transformY( miny ) );
     ctx.closePath();
