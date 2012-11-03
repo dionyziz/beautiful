@@ -49,6 +49,12 @@ function drawLegend( ctx, colors ) {
     ctx.fillRect( 5, 5 * 30 + 10, 20, 20 ); 
     ctx.strokeRect( 5, 5 * 30 + 10, 20, 20 ); 
     ctx.fillText( "iOS iPhone", x + 30, 5 * 30 + 25 );
+
+    ctx.beginPath();
+    ctx.fillStyle = "#fff";
+    ctx.fillRect( 5, 6 * 30 + 10, 20, 20 ); 
+    ctx.strokeRect( 5, 6 * 30 + 10, 20, 20 ); 
+    ctx.fillText( "Other", x + 30, 6 * 30 + 25 );
 }
 function drawMultiple( ctx, dataPointsSets, minx, maxx, miny, maxy, left, top, width, height ) {
     dataPointsSets.reverse();
