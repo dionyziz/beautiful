@@ -1,10 +1,4 @@
 function drawAxes( ctx, left, top, width, height, labelsx, labelsy, fontx, fonty, gridColor, rectColor ) {
-    ctx.beginPath();
-    ctx.rect( left, top, width, height );
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = rectColor;
-    ctx.stroke();
-
     var rowW = width / ( labelsx.length - 1 )
         lineH = height / ( labelsy.length - 1 ),
         textSize = 0,
@@ -34,14 +28,6 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, fontx, fonty
 
         ++j;
     }
-    /*
-    ctx.beginPath();
-    textSize = ctx.measureText( labelsx[ j ] );
-    ctx.strokeStyle = font.color;
-    ctx.fillStyle = font.fillColor;
-    ctx.strokeText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
-    ctx.fillText( labelsx[ j ], i + left - textSize.width / 2, height + top + 20 );
-    */
 
     j = 0;
     for ( var i = 0; i < height; i += lineH ) {
@@ -63,4 +49,10 @@ function drawAxes( ctx, left, top, width, height, labelsx, labelsy, fontx, fonty
 
         ++j;
     }
+
+    ctx.beginPath();
+    ctx.rect( left, top, width, height );
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = rectColor;
+    ctx.stroke();
 }
