@@ -1,6 +1,5 @@
-function draw( ctx, dataPoints, left, top, width, height ) {
-    var minx = Infinity, maxx = -Infinity,
-        miny = Infinity, maxy = -Infinity;
+function draw( ctx, dataPoints, miny, maxy, left, top, width, height ) {
+    var minx = Infinity, maxx = -Infinity;
 
     for ( var dataPoint in dataPoints ) {
         if ( dataPoint.x < minx ) {
@@ -16,9 +15,9 @@ function draw( ctx, dataPoints, left, top, width, height ) {
             maxy = dataPoint.y;
         }
     }
-    var g = Graph( minx, maxx, miny, maxy, left, top, width, height );
+    var g = new Graph( minx, maxx, miny, maxy, left, top, width, height );
 
-    ctx.moveTo( g.transformX( minx ), g.transformY( miny ) );
+    ctx.moveTo( g.transformX( minx ), miny );
 
     var x = dataPoint.x,
         y = dataPoint.y;
@@ -35,4 +34,5 @@ function draw( ctx, dataPoints, left, top, width, height ) {
         y = g.transformY( y );
         ctx.lineTo( x, y );
     }
+
 }
