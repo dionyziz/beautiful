@@ -17,11 +17,11 @@ function onresize() {
     switch ( currentMode ) {
         case 'all':
             $( 'h1' ).text( 'Phone market share - Non-smart phones VS Smart phones' );
-            $( 'strong' ).show();
+            $( 'a' ).text( 'Click for market breakdown' );
             break;
         case 'smart':
             $( 'h1' ).text( 'Smart phone market breakdown' );
-            $( 'strong' ).hide();
+            $( 'a' ).text( 'Click for smartphones VS non-smart phones' );
             break;
     }
 }
@@ -139,11 +139,15 @@ canvas.onmousemove = function( e ) {
     }
 };
 canvas.onmousedown = function() {
-    if ( onSmart ) {
-        console.log( 'Smartphones clicked!' );
-        currentMode = 'smart';
-
-        canvas.style.cursor = 'default';
-        onresize();
+    if ( currentMode == 'smart' ) {
+        currentMode = 'all';
     }
+    else {
+        currentMode = 'smart';
+    }
+    onresize();
 };
+$( 'a' ).click( function() {
+    canvas.onmousedown();
+    return false;
+} );
