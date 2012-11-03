@@ -6,6 +6,7 @@ var PADDING_TOP = 10,
     PADDING_RIGHT = 150,
     PADDING_BOTTOM = 50,
     PADDING_LEFT = 200;
+var animating = false;
 
 currentMode = 'all';
 function onresize() {
@@ -31,6 +32,9 @@ onresize();
 var allColor = [ 65, 106, 225 ];
 isPoint = false;
 function drawData( json, which ) {
+    if ( animating ) {
+        return;
+    }
     ctx.clearRect( 0, 0, W, H );
     if ( json === false ) {
         return;
@@ -138,7 +142,17 @@ canvas.onmousedown = function() {
     else {
         currentMode = 'smart';
     }
-    onresize();
+    animating = true;
+
+    $( 'canvas' ).fadeOut( 300, function() {
+        animating = false;
+        onresize();
+        animating = true;
+        $( 'canvas' ).fadeIn( 300, function() {
+            animating = false;
+            onresize();
+        } );
+    } );
 };
 $( 'a' ).click( function() {
     canvas.onmousedown();
