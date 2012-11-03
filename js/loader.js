@@ -10,7 +10,7 @@ var animating = false;
 var graphAnimation = 0;
 
 function playGraphAnimation() {
-    graphAnimation += 0.02;
+    graphAnimation += Math.cos( graphAnimation * Math.PI / 2.1 ) * 0.02;
     if ( graphAnimation > 1 ) {
         graphAnimation = 1;
     }
