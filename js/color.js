@@ -64,7 +64,7 @@ function hslToRgb( h, s, l ) {
 
 function lightColor( rgb ) {
     var hsl = rgbToHsl( rgb[ 0 ], rgb[ 1 ], rgb[ 2 ] );
-    hsl[ 2 ] -= 0.3;
+    hsl[ 2 ] -= 0.25;
     
     var ret = hslToRgb( hsl[ 0 ], hsl[ 1 ], hsl[ 2 ] );
     for ( var i = 0; i < 3; ++i ) {
